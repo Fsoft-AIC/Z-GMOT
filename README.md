@@ -1,40 +1,14 @@
-# GLIP: Grounded Language-Image Pre-training  
+# Z-GMOT: Zero-shot Generic Multiple Object Tracking
 
-<img src="docs/lead.png" width="800"> 
+<img src="asset/teaser.png" width="800"> 
 
 
 ## Updates
 
-* 09/19/2022: GLIPv2 has been accepted to NeurIPS 2022. 
-
-* 09/18/2022: Organizing ECCV Workshop [*Computer Vision in the Wild (CVinW)*](https://computer-vision-in-the-wild.github.io/eccv-2022/), where two challenges are hosted to evaluate the zero-shot, few-shot and full-shot performance of pre-trained vision models in downstream tasks:
-  - [``*Image Classification in the Wild (ICinW)*''](https://eval.ai/web/challenges/challenge-page/1832/overview) Challenge evaluates on 20 image classification tasks.
-  - [``*Object Detection in the Wild (ODinW)*''](https://eval.ai/web/challenges/challenge-page/1839/overview) Challenge evaluates on 35 object detection tasks.
-
-$\qquad$ [ <img src="https://computer-vision-in-the-wild.github.io/eccv-2022/static/eccv2022/img/ECCV-logo3.png" width=10%/> [Workshop]](https://computer-vision-in-the-wild.github.io/eccv-2022/)    $\qquad$    [<img src="https://evalai.s3.amazonaws.com/media/logos/4e939412-a9c0-46bd-9797-5ba0bd0a9095.jpg" width=10%/> [IC Challenge] ](https://eval.ai/web/challenges/challenge-page/1832/overview)
-$\qquad$    [<img src="https://evalai.s3.amazonaws.com/media/logos/3a31ae6e-a990-48fb-b2c3-1e7da9d17a20.jpg" width=10%/> [OD Challenge] ](https://eval.ai/web/challenges/challenge-page/1839/overview)
-
-
-* 09/13/2022: Updated [HuggingFace Demo](https://huggingface.co/spaces/haotiz/glip-zeroshot-demo)! Feel free to give it a try!!!
-
-  -  Acknowledgement: Many thanks to the help from @[HuggingFace](https://huggingface.co/) for a Space GPU upgrade to host the GLIP demo! 
-
-* 06/21/2022: GLIP has been selected as a Best Paper Finalist at CVPR 2022!
-
-* 06/16/2022: ODinW benchmark released! GLIP-T A&B released!
-
-* 06/13/2022: GLIPv2 is on Arxiv https://arxiv.org/abs/2206.05836!
-
-* 04/30/2022: Updated [Colab Demo](https://colab.research.google.com/drive/12x7v-_miN7-SRiziK3Cx4ffJzstBJNqb?usp=sharing)!
-
-* 04/14/2022: GLIP has been accepted to CVPR 2022 as an oral presentation! First version of code and pre-trained models are released!
-
-* 12/06/2021: GLIP paper on arxiv https://arxiv.org/abs/2112.03857.
-
-* 11/23/2021: Project page built. <br/>
+* 09/19/2022: Z-GMOT has been accepted to NAACL findings 2024. 
 
 ## Introduction
-This repository is the project page for [GLIP](https://arxiv.org/abs/2112.03857).  GLIP demonstrate strong zero-shot and few-shot transferability to various object-level recognition tasks. 
+This repository is the source code for [Z-GMOT](https://arxiv.org/abs/2305.17648).  GLIP demonstrate strong zero-shot and few-shot transferability to various object-level recognition tasks. 
 
 1. When directly evaluated on COCO and LVIS (without seeing any images in COCO), GLIP achieves 49.8 AP and 26.9 AP, respectively, surpassing many supervised baselines.
 2. After fine-tuned on COCO, GLIP achieves 60.8 AP on val and 61.5 AP on test-dev, surpassing prior SoTA.
