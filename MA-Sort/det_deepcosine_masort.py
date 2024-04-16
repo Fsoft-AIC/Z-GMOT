@@ -84,9 +84,9 @@ class Detections(object):
 @torch.no_grad()
 def run(args):
     start_frame = 1
-    data_dir = '/cm/shared/kimth1/Tracking/G2MOT/frames/GMOT40/test'
-    detection_dir = '/cm/shared/kimth1/Tracking/Z-GMOT[official]/iGLIP_openvoc/GMOT_40_boxes'
-    save_dir = 'tracking_result'
+    data_dir = args.data_dir
+    detection_dir = args.det_dir
+    save_dir = args.ret_dir
     vid_list = os.listdir(data_dir)
     vid_list.sort()
 
@@ -194,18 +194,11 @@ def run(args):
 def parse_opt():
     parser = argparse.ArgumentParser()
     parser.add_argument('--tracking-method', type=str, default='masort', help='masort, deepocsort, botsort, strongsort, ocsort, bytetrack')
-    parser.add_argument('--source', type=str, default='0', help='file/dir/URL/glob, 0 for webcam')  
-    parser.add_argument('--save-txt', action='store_false', help='save tracking results in a txt file')
-    parser.add_argument('--save-dir', type=str, default='/content/drive/MyDrive/FPT-AI/GDinoBase') # save vis and text
-    parser.add_argument('--feature-mode', type=str, default='gdino')
-    parser.add_argument('--short-mems', type=int, default=0, help='re-filter with best embedding')
-    parser.add_argument('--long-mems', type=int, default=0, help='re-filter with best embedding')
-    parser.add_argument('--cropped-mems', action='store_true', help='re-filter for occluded objects')
-    parser.add_argument('--start-frame', type=int, default=0) # 
-    parser.add_argument('--end-frame', type=int, default=0) # 
+    parser.add_argument('--data-dir', type=str, default='./data/G2MOT/frames/GMOT40/test', help='path of dataset')  
+    parser.add_argument('--det-dir', type=str, default='GMOT_40_boxes', help='path of detection from iGLIP')
+    parser.add_argument('--ret-dir', type=str, default='tracking_result', help='path of tracking results')
+
     opt = parser.parse_args()
-    opt = parser.parse_args()
-    # print_args(vars(opt))
     return opt
 
 def main(opt):
