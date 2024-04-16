@@ -1,6 +1,6 @@
 # Z-GMOT: Zero-shot Generic Multiple Object Tracking
 
-<img src="asset/teaser.png" width="800"> 
+<img src="asset/teaser.png" width="500"> 
 
 
 ## Updates
