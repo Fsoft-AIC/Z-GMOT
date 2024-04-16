@@ -1,0 +1,31 @@
+{
+    "airplane-0": "one helicopter . one plane",
+    "airplane-1": "one helicopter . one plane",
+
+    "ball-0": "ball",
+    "ball-3": "tennis ball",
+
+    "balloon-0": "colorful balloon",
+    "balloon-1": "colorful balloon",
+    "balloon-2": "one lantern",
+
+    "bird-0": "black bird",
+    "bird-1": "white bird", 
+
+    "car-1": "car",
+
+    "insect-0": "one fly . one bee . one insect",
+    "insect-1": "one ant . one insect",
+    "insect-2": "black ant",
+    "insect-3": "yellow bee",
+
+    "person-0": "person . bird",
+    "person-1": "athlete",
+    "person-2": "athlete",
+    "person-3": "person . bird",
+
+    "stock-0": "cow . goat",
+    "stock-1": "sheep. goat",
+    "stock-2": "goat . sheep",
+    "stock-3": "dog"
+}
