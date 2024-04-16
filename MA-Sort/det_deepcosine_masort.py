@@ -18,7 +18,6 @@ ROOT = FILE.parents[0]  # root directory
 import torch
 from boxmot.tracker_zoo import create_tracker
 
-model_path = '/cm/shared/kimth1/Tracking/DanceTrack/oracle_analysis/ckpt.t7'
 device = "cuda:0" if torch.cuda.is_available() else "cpu"
 
 def plot_one_box(x, img, color=None, label=None, line_thickness=3):
@@ -90,6 +89,7 @@ def run(args):
     vid_list = os.listdir(data_dir)
     vid_list.sort()
 
+    model_path = args.reid
     reid = ReID(model_path=model_path)
     for folder_name in vid_list:
         print(f'start tracking {folder_name}')
@@ -197,6 +197,7 @@ def parse_opt():
     parser.add_argument('--data-dir', type=str, default='./data/G2MOT/frames/GMOT40/test', help='path of dataset')  
     parser.add_argument('--det-dir', type=str, default='GMOT_40_boxes', help='path of detection from iGLIP')
     parser.add_argument('--ret-dir', type=str, default='tracking_result', help='path of tracking results')
+    parser.add_argument('--reid', type=str, default='./ckpt.t7', help='path of reID model')
 
     opt = parser.parse_args()
     return opt
