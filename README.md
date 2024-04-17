@@ -5,7 +5,7 @@
 
 ## Updates
 
-* 09/19/2022: Z-GMOT has been accepted to NAACL findings 2024. 
+* 15/03/2024: Z-GMOT has been accepted to NAACL findings 2024. 
 
 ## Introduction
 This repository is the source code for [Z-GMOT](https://arxiv.org/abs/2305.17648).  GLIP demonstrate strong zero-shot and few-shot transferability to various object-level recognition tasks. 
