@@ -1,0 +1,605 @@
+:root {
+    --small-thumb-border-radius: 2px;
+    --larger-thumb-border-radius: 3px;
+}
+
+html {
+    font-size: 14px;
+    line-height: 1.6;
+    font-family: 'Google Sans', system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+    text-size-adjust: 100%;
+    -ms-text-size-adjust: 100%;
+    -webkit-text-size-adjust: 100%;
+}
+
+@media(min-width: 768px) {
+    html {
+        font-size: 16px;
+    }
+}
+
+body {
+    margin: 0px;
+    padding: 0px;
+}
+
+/* Basic CSS for the navigation bar */
+.navbar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    background-color: #333;
+    color: #fff;
+    z-index: 100; /* Ensure the navbar appears above other content */
+}
+
+/* Style for the headline on the left */
+.navbar h3 {
+    color: white;  /* Text color for the headline */
+    margin: 0;
+    padding: 10px 0px 10px 200px;
+    float: left;  /* Float left to place it on the left side */
+}
+
+/* Style for the page links on the right */
+.navbar ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 15px;
+    float: right;  /* Float right to place them on the right side */
+}
+
+.navbar li {
+    display: inline;
+    margin: 0 10px;  /* Add spacing between links */
+}
+
+.navbar a {
+    color: white;  /* Text color for the links */
+    text-decoration: none;
+}
+
+.navbar a.active {
+    color: white;  /* Text color for the active link */
+    text-decoration: none;
+}
+
+/* Hover effect for the links */
+.navbar a:hover {
+    text-decoration: underline;
+}
+
+/* Style for the main content */
+
+/* Apply digital code style font */
+.figure-name {
+    font-family: serif;
+    text-align: center;
+}
+
+.code-font {
+    font-family: "Courier New", monospace;
+    text-align: center;
+    color: rgb(0, 0, 0); /* Green color, you can adjust the color as desired */
+}
+
+.content {
+    margin-top: 60px; /* Adjust for the fixed navbar height */
+}
+
+/* Style for section shortcuts */
+.shortcut {
+    display: none; /* Initially hidden on larger screens */
+}
+
+/* Media query for smaller screens (e.g., mobile) */
+@media (max-width: 768px) {
+    .navbar a {
+        display: none;
+    }
+
+    .shortcut {
+        display: block;
+        padding: 5px;
+    }
+}
+
+.base-grid,
+.n-header,
+.n-byline,
+.n-title,
+.n-article,
+.n-footer {
+    display: grid;
+    justify-items: stretch;
+    grid-template-columns: [screen-start] 8px [page-start kicker-start text-start gutter-start middle-start] 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr [text-end page-end gutter-end kicker-end middle-end] 8px [screen-end];
+    grid-column-gap: 8px;
+}
+
+.grid {
+    display: grid;
+    grid-column-gap: 8px;
+}
+
+@media(min-width: 768px) {
+
+    .base-grid,
+    .n-header,
+    .n-byline,
+    .n-title,
+    .n-article,
+    .n-footer {
+        display: grid;
+        justify-items: stretch;
+        grid-template-columns: [screen-start] 1fr [page-start kicker-start middle-start text-start] 45px 45px 45px 45px 45px 45px 45px 45px 45px 45px [ kicker-end text-end gutter-start] 45px [middle-end] 45px [page-end gutter-end] 1fr [screen-end];
+        grid-column-gap: 16px;
+    }
+
+    .grid {
+        grid-column-gap: 16px;
+    }
+}
+
+@media(min-width: 1000px) {
+
+    .base-grid,
+    .n-header,
+    .n-byline,
+    .n-title,
+    .n-article,
+    .n-footer {
+        display: grid;
+        justify-items: stretch;
+        grid-template-columns: [screen-start] 1fr [page-start kicker-start] 50px [middle-start] 50px [text-start kicker-end] 50px 50px 50px 50px 50px 50px 50px 50px 50px 50px [text-end gutter-start] 50px [middle-end] 50px [page-end gutter-end] 1fr [screen-end];
+        grid-column-gap: 16px;
+    }
+
+    .grid {
+        grid-column-gap: 16px;
+    }
+}
+
+@media (min-width: 1180px) {
+
+    .base-grid,
+    .n-header,
+    .n-byline,
+    .n-title,
+    .n-article,
+    .n-footer {
+        display: grid;
+        justify-items: stretch;
+        grid-template-columns: [screen-start] 1fr [page-start kicker-start] 60px [middle-start] 60px [text-start kicker-end] 60px 60px 60px 60px 60px 60px 60px 60px 60px 60px [text-end gutter-start] 60px [middle-end] 60px [page-end gutter-end] 1fr [screen-end];
+        grid-column-gap: 32px;
+    }
+
+    .grid {
+        grid-column-gap: 32px;
+    }
+
+}
+
+.base-grid {
+    grid-column: screen;
+}
+
+/* default grid column assignments */
+.n-title>* {
+    grid-column: text;
+}
+
+.n-article>* {
+    grid-column: text;
+}
+
+.n-header {
+    height: 0px;
+}
+
+.n-footer {
+    height: 60px;
+}
+
+.n-title {
+    padding: 6rem 0 1.5rem;
+}
+
+.l-page {
+    grid-column: page;
+}
+
+.l-article {
+    grid-column: text;
+}
+
+p {
+    margin-top: 0;
+    margin-bottom: 1em;
+}
+
+.pixelated {
+    image-rendering: pixelated;
+}
+
+strong {
+    font-weight: 600;
+}
+
+a:link {
+    color: #76B900;
+}
+
+a:visited {
+    color: green;
+}
+/*------------------------------------------------------------------*/
+/* title */
+.n-title h1 {
+    font-family: "Google Sans", system-ui, Arial, sans-serif;
+    color: #082333;
+    grid-column: text;
+    font-size: 40px;
+    font-weight: 700;
+    line-height: 1.1em;
+    margin: 0 0 0.5rem;
+    text-align: center;
+}
+
+@media (min-width: 768px) {
+    .n-title h1 {
+        font-size: 48px;
+    }
+}
+
+/*------------------------------------------------------------------*/
+/* article */
+.n-article {
+    text-align: justify;
+    color: rgb(33, 40, 53);
+    border-top: 1px solid rgba(0, 0, 0, 0.1);
+    padding-top: 3rem;
+}
+
+.n-article h2 {
+    text-align: left;
+    contain: layout style;
+    font-weight: 600;
+    font-size: 24px;
+    line-height: 1.25em;
+    margin: 2rem 0 1.5rem 0;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+    padding-bottom: 1rem;
+}
+
+@media (min-width: 768px) {
+    .n-article {
+        line-height: 1.7;
+    }
+
+    .n-article h2 {
+        font-size: 36px;
+    }
+}
+
+/*------------------------------------------------------------------*/
+/* byline */
+
+.n-byline {
+    contain: style;
+    overflow: hidden;
+    border-top: 1px solid rgba(0, 0, 0, 0.1);
+    font-size: 1.1rem;
+    line-height: 1.8em;
+    padding: 1.5rem 0;
+    min-height: 1.8em;
+}
+
+.n-byline .byline {
+    grid-column: text;
+}
+
+.byline {
+    grid-template-columns: 1fr 1fr 1fr 1fr;
+}
+
+.grid {
+    display: grid;
+    grid-column-gap: 8px;
+}
+
+@media (min-width: 768px) {
+    .grid {
+        grid-column-gap: 16px;
+    }
+}
+
+.n-byline p {
+    margin: 0;
+}
+
+.n-byline h3 {
+    font-size: 0.6rem;
+    font-weight: 400;
+    color: rgba(0, 0, 0, 0.5);
+    margin: 0;
+    text-transform: uppercase;
+}
+
+.n-byline .authors-affiliations {
+    grid-column-end: span 2;
+    grid-template-columns: 1fr 1fr;
+}
+
+.n-byline .authors-venue {
+    grid-column-end: span 2;
+    grid-template-columns: 1fr 1fr;
+}
+
+/*------------------------------------------------------------------*/
+/* figures */
+.figure {
+    margin-top: 1rem;
+    margin-bottom: 1rem;
+}
+
+ul.authors {
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+    text-align: center;
+}
+
+ul.authors li {
+    padding: 0 0.5rem;
+    display: inline-block;
+}
+
+ul.authors sup {
+    color: rgb(126, 126, 126);
+}
+
+ul.authors.affiliations {
+    margin-top: 0.5rem;
+}
+
+ul.authors.affiliations li {
+    color: rgb(126, 126, 126);
+}
+
+ul.authors.venue li {
+    margin-top: 0.5rem;
+    color: rgb(0, 0, 0);
+}
+
+ul.authors.links li {
+    margin-top: 0.8rem;
+    padding: 0 0.1rem;
+}
+
+/* Style buttons */
+.btn {
+    background-color: #76B900; /* Blue background */
+    border: none; /* Remove borders */
+    color: white; /* White text */
+    padding: 8px 12px; /* Some padding */
+	font-size: 14px; /* Set a font size */
+    cursor: pointer; /* Mouse pointer on hover */
+    border-radius: 18px;
+}
+  
+  /* Darker background on mouse-over */
+.btn:hover {
+    background-color: green;
+}
+
+/* For displaying image examples */
+.image-container {
+    display: flex;
+}
+
+/* Create three equal columns that sits next to each other */
+.image-content {
+    margin: 10px;
+    flex: 1;
+    text-align: center !important;
+}
+
+.pre-container {
+    overflow: auto; /* Enable scrolling if the content overflows */
+    text-align: left;
+    white-space: pre-wrap; /* Allow long lines to wrap within the container */
+    width: calc(100%/2 - 20px); /* Prevent the <pre> from exceeding the parent's width */
+    max-height: 100%; /* Prevent the <pre> from exceeding the parent's height */
+}
+
+p {
+    margin: 10px 0;
+    word-wrap: break-word; /* Allow long captions to break into multiple lines */
+}
+
+/* For BibTeX */
+pre {
+    margin-top: 0px;
+    font-size: 0.85em;
+    padding-left: 20px;
+    padding-right: 7px;
+    padding-top: 3px;
+    padding-bottom: 3px;
+    border-radius: 3px;
+    min-width: 0;
+    background-color: rgb(235, 235, 235);
+    overflow: auto;
+}
+
+/* video caption */
+
+.videocaption {
+    display: flex;
+    font-size: 16px;
+    line-height: 1.5em;
+    margin-top: 1rem;
+    margin-bottom: 2rem;
+    justify-content: center;
+}
+
+.disable-selection {
+    user-select: none;
+    -moz-user-select: none;
+    /* Firefox */
+    -ms-user-select: none;
+    /* Internet Explorer */
+    -khtml-user-select: none;
+    /* KHTML browsers (e.g. Konqueror) */
+    -webkit-user-select: none;
+    /* Chrome, Safari, and Opera */
+    -webkit-touch-callout: none;
+    /* Disable Android and iOS callouts*/
+}
+
+.shadow {
+    box-shadow: 5px 5px 5px  rgba(0, 0, 0, 0.35);
+}
+
+.emph {
+    font-family: Arial, Helvetica, sans-serif;
+    font-weight: bold;
+}
+
+.hidden {
+    display: none;
+}
+
+h3.figtitle {
+    margin-top: 0;
+    margin-bottom: 0;
+}
+
+h3.results {
+    margin-top: 0rem;
+    font-family: Arial, Helvetica, sans-serif;
+    font-weight: bold;
+    font-size: 22px;
+}
+
+.fig-title-line {
+    grid-template-columns: 2fr 0.75fr;
+}
+
+.fig-thumb-image-row {
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: 1fr;
+}
+
+.fig-thumb-image-row-item {
+    width: 100%;
+    min-height: auto;
+    border-radius: var(--small-thumb-border-radius);
+}
+
+.fig-dataset-button {
+    border-color: rgba(0, 0, 0, 0);
+    border-width: 1px;
+    border-style: solid;
+    cursor: pointer;
+    opacity: 0.6;
+}
+
+.fig-dataset-button.active {
+    border-color: rgba(0, 0, 0, 0.7);
+    border-width: 1px;
+    border-style: solid;
+    opacity: 1.0;
+}
+
+.grid {
+    display: grid;
+    grid-column-gap: 8px;
+}
+
+.videoWrapper {
+    position: relative;
+    padding-bottom: 56.25%;
+    /* 16:9 */
+    padding-top: 15px;
+    height: 0;
+    margin-bottom: 20px;
+}
+  
+.videoWrapper iframe {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+}
+
+.video_without_cap {
+    margin-top: 0rem;
+    margin-bottom: 1.5rem;
+}
+
+code {
+    font-family: 'Times New Roman', Times, serif;
+}
+
+/* Style for dataset */
+.image-json-container {
+    display: flex;
+    height: 220px;
+    align-items: center;
+    margin-bottom: 20px;
+    padding: 10px 0 0 0;
+}
+
+.image-dataset {
+    max-height: 100%;
+    object-fit: cover;
+    padding: 0 0 12px 0;
+}
+
+.json-dataset {
+    flex-grow: 1; /* Allow the text to take up remaining space */
+    overflow: auto; /* Add overflow property for text scrolling if needed */
+    text-align: left;
+    height: 96%;
+    white-space: pre-line; /* Preserve whitespace in the <pre> tag */
+}
+
+/* Style for the footer links */
+footer {
+    background-color: #333;
+    width: 100%;
+    color: #fff;
+    padding: 20px 10px; /* Added padding to the top and bottom */
+}
+
+/* Style for the footer content */
+.footer-content {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    flex-wrap: wrap;
+}
+
+/* Style for the footer links */
+.footer-content ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.footer-content ul li {
+    display: inline;
+    margin-right: 20px;
+}
+
+.footer-content ul li:last-child {
+    margin-right: 0;
+}
+
+.footer-content ul li a {
+    text-decoration: none;
+    color: #fff;
+}

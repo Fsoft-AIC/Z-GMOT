@@ -1,0 +1,423 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="" xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+    <meta charset="utf-8" />
+    <meta content="width=device-width, initial-scale=1" name="viewport" />
+    <title>
+        Z-GMOT with MA-SORT: Zero-shot Generic Multiple Object Tracking (GMOT) with Motion Appearance SORT (MA-SORT)
+    </title>
+    <meta content="Z-GMOT" property="og:title" />
+    <meta content="A typical pipeline for multi-object tracking (MOT) is to use a detector for object localization, and following re-identification (re-ID) for object association. This pipeline is partially motivated by recent progress in both object detec- tion and re-ID, and partially motivated by biases in existing tracking datasets, where most objects tend to have distin- guishing appearance and re-ID models are sufficient for es- tablishing associations. In response to such bias, we would like to re-emphasize that methods for multi-object tracking should also work when object appearance is not sufficiently discriminative. To this end, we propose a large-scale dataset for multi-human tracking, where humans have similar appearance, diverse motion and extreme articulation. As the dataset contains mostly group dancing videos, we name it “DanceTrack”. We expect DanceTrack to provide a better platform to develop more MOT algorithms that rely less on visual discrimination and depend more on motion analysis. We benchmark several state-of-the-art trackers on our dataset and observe a significant performance drop on DanceTrack when compared against existing benchmarks." name="description" property="og:description" />
+    <meta content="https://github.com/DanceTrack" property="og:url" />
+    <meta name="keywords" content="Generic Multi-Object Tracking in Uniform Appearance and Diverse Motion">
+
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/fontawesome.all.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/jpswalsh/academicons@1/css/academicons.min.css">
+    <link href="https://fonts.googleapis.com/css?family=Google+Sans|Noto+Sans|Castoro" rel="stylesheet">
+    <script defer src="js/fontawesome.all.min.js"></script>
+
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            text-align: center;
+            margin-top: 20px;
+        }
+        th, td {
+            border: 1px solid black;
+            padding: 5px;
+        }
+        th {
+            background-color: #ddd;
+        }
+        .highlight {
+            font-weight: bold;
+        }
+        .reference {
+            font-style: italic;
+            font-size: smaller;
+        }
+        .bold {
+            font-weight: bold;
+        }
+        .italic {
+            font-style: italic;
+        }
+        .underline {
+            text-decoration: underline;
+        }
+        .checkmark {
+            color: green;
+        }
+        .xmark {
+            color: red;
+        }
+        .category-header {
+            background-color: #c3e6cb;
+        }
+        .sub-category-header {
+            background-color: #bee5eb;
+        }
+        .dataset-name {
+            background-color: #fff3cd;
+        }
+        .asparagus {
+            background-color: #87a96b; /* Asparagus */
+        }
+        .babyblue {
+            background-color: #89cff0; /* Baby blue */
+        }
+        .almond {
+            background-color: #efdecd; /* Almond */
+        }
+        .aureolin {
+            background-color: #fdee00; /* Aureolin */
+        }
+        caption {
+            caption-side: bottom;
+            margin-bottom: 10px;
+            text-align: center;
+            font-style: italic;
+        }
+    </style>    
+    
+</head>
+
+<body>
+    <div class="navbar">
+        <h3>Z-GMOT demo website</h3>
+        <ul>
+            <li><a href="index.html">Home</a></li>
+            <li><a href="result.html">Result</a></li>
+            <li><a href="dataset.html">Dataset</a></li>
+        </ul>
+        <script>
+            // Get the current URL
+            var currentURL = window.location.href;
+        
+            // Select all navigation links
+            var navLinks = document.querySelectorAll('.navbar a');
+        
+            // Loop through the links to find the active one
+            for (var i = 0; i < navLinks.length; i++) {
+                var linkURL = navLinks[i].href;
+        
+                // Check if the current URL contains the link's URL
+                if (currentURL.indexOf(linkURL) !== -1) {
+                    // Add the "active" class to the link
+                    navLinks[i].classList.add('active');
+                }
+            }
+        </script>
+    </div>
+
+    <div class="n-article">
+        <h2 class="dataset" id="dataset">
+           Dataset
+        </h2>
+
+        <h3 class="results" id="dataset">
+            Download dataset
+        </h3>
+        <p>Collect videos from GMOT40 and AnimalTrack datasets</p>
+        <p>Download our annotation for Refer-GMOT and Refer-Animal: </p>
+        <url>https://drive.google.com/file/d/1TVjDD6jxL5TsjLXVEUacIYXa-0IBY0mc/view?usp=sharing</url>
+
+        <h3 class="results" id="dataset">
+            Datasets comparison
+        </h3>  
+
+        <table>
+            <caption>
+                <span class="underline">Table 1: Comparison of <b>existing datasets</b> of SOT, MOT, GSOT, GMOT.</span> ``#'' represents the quantity of the respective items. <span class="italic">, Vid. denote Categories and Videos. NLP indicates textual natural language descriptions.</span>
+            </caption>
+            <tr>
+                <th></th>
+                <th>Datasets</th>
+                <th>NLP</th>
+                <th>#Cat.</th>
+                <th>#Vid.</th>
+                <th>#Frames</th>
+                <th>#Tracks</th>
+                <th>#Boxs</th>
+            </tr>
+            <!-- SOT Category -->
+            <tr class="asparagus">
+                <td class="category-label" rowspan="5">SOT</td>
+                <td>OTB2013</td>
+                <td class="xmark">✖</td>
+                <td>10</td>
+                <td>51</td>
+                <td>29K</td>
+                <td>51</td>
+                <td>29K</td>
+            </tr>
+            <tr class="asparagus">
+                <td>VOT2017</td>
+                <td class="xmark">✖</td>
+                <td>24</td>
+                <td>60</td>
+                <td>21K</td>
+                <td>60</td>
+                <td>21K</td>
+            </tr>
+            <tr class="asparagus">
+                <td>TrackingNet</td>
+                <td class="xmark">✖</td>
+                <td>21</td>
+                <td>31K</td>
+                <td>14M</td>
+                <td>31K</td>
+                <td>14M</td>
+            </tr>
+            <tr class="asparagus">
+                <td>LaSOT</td>
+                <td class="checkmark">✔</td>
+                <td>70</td>
+                <td>1.4K</td>
+                <td>3.52M</td>
+                <td>1.4K</td>
+                <td>3.52M</td>
+            </tr>
+            <tr class="asparagus">
+                <td>TNL2K</td>
+                <td class="checkmark">✔</td>
+                <td>-</td>
+                <td>2K</td>
+                <td>1.24M</td>
+                <td>2K</td>
+                <td>1.24M</td>
+            </tr>
+            <!-- MOT Category -->
+            <tr class="babyblue">
+                <td class="category-label" rowspan="7">MOT</td>
+                <td>MOT17</td>
+                <td class="xmark">✖</td>
+                <td>1</td>
+                <td>14</td>
+                <td>11.2K</td>
+                <td>1.3K</td>
+                <td>0.3M</td>
+            </tr>
+            <tr class="babyblue">
+                <td>MOT20 (Dendorfer et al., 2020)</td>
+                <td class="xmark">✖</td>
+                <td>1</td>
+                <td>8</td>
+                <td>13.41K</td>
+                <td>3.45K</td>
+                <td>1.65M</td>
+            </tr>
+            <tr class="babyblue">
+                <td>Omni-MOT (Sun et al., 2020b)</td>
+                <td class="xmark">✖</td>
+                <td>1</td>
+                <td>-</td>
+                <td>14M+</td>
+                <td>250K</td>
+                <td>110M</td>
+            </tr>
+            <tr class="babyblue">
+                <td>DanceTrack (Sun et al., 2022)</td>
+                <td class="xmark">✖</td>
+                <td>1</td>
+                <td>10</td>
+                <td>105K</td>
+                <td>990</td>
+                <td>-</td>
+            </tr>
+            <tr class="babyblue">
+                <td>TAO (Dave et al., 2020)</td>
+                <td class="xmark">✖</td>
+                <td>833</td>
+                <td>2.9K</td>
+                <td>2.6M</td>
+                <td>17.2K</td>
+                <td>333K</td>
+            </tr>
+            <tr class="babyblue">
+                <td>SportMOT (Cui et al., 2023)</td>
+                <td class="xmark">✖</td>
+                <td>1</td>
+                <td>240</td>
+                <td>150K</td>
+                <td>3.4K</td>
+                <td>1.62M</td>
+            </tr>
+            <tr class="babyblue">
+                <td>Refer-KITTI (Wu et al., 2023) </td>
+                <td class="checkmark">✔</td>
+                <td>2</td>
+                <td>18</td>
+                <td>6.65K</td>
+                <td>637</td>
+                <td>28.72</td>
+            </tr>
+            <!-- GSOT Category -->
+            <tr class="almond">
+                <td class="category-label" rowspan="2">GSOT</td>
+                <td>GOT-10 (Huang et al., 2019)</td>
+                <td class="xmark">✖</td>
+                <td>563</td>
+                <td>10K</td>
+                <td>1.5M</td>
+                <td>10K</td>
+                <td>1.5M</td>
+            </tr>
+            <tr class="almond">
+                <td>Fish (Kay et al., 2022)</td>
+                <td class="xmark">✖</td>
+                <td>1</td>
+                <td>1.6K</td>
+                <td>527.2K</td>
+                <td>8.25K</td>
+                <td>516K</td>
+            </tr>
+            <!-- GMOT Category -->
+            <tr class="aureolin">
+                <td class="category-label" rowspan="4">GMOT</td>
+                <td>AnimalTrack (Zhang et al., 2022b)</td>
+                <td class="xmark">✖</td>
+                <td>10</td>
+                <td>58</td>
+                <td>24.7K</td>
+                <td>1.92K</td>
+                <td>429K</td>
+            </tr>
+            <tr class="aureolin">
+                <td>GMOT-40 (Bai et al., 2021)</td>
+                <td class="xmark">✖</td>
+                <td>10</td>
+                <td>40</td>
+                <td>9K</td>
+                <td>2.02K</td>
+                <td>256K</td>
+            </tr>
+            <tr class="aureolin">
+                <td class="bold">Refer-Animal(Ours)</td>
+                <td class="checkmark">✔</td>
+                <td>10</td>
+                <td>58</td>
+                <td>24.7K</td>
+                <td>1.92K</td>
+                <td>429K</td>
+            </tr>
+            <tr class="aureolin">
+                <td class="bold">Refer-GMOT(Ours)</td>
+                <td class="checkmark">✔</td>
+                <td>10</td>
+                <td>40</td>
+                <td>9K</td>
+                <td>2.02K</td>
+                <td>256K</td>
+            </tr>
+        </table>
+
+        <p>In this work, we <em>introduce textual descriptions</em> to two existing GMOT datasets, named <strong>"Refer-GMOT40"</strong> and <strong>"Refer-Animal"</strong>. The <strong>"Refer-GMOT40"</strong> dataset includes 40 videos, each showcasing 10 different real-world object categories, with four sequences per category. The <strong>"Refer-Animal"</strong> dataset features 26 video sequences, each depicting 10 common animal categories. Each video is annotated with the object's name, a description of its attributes, and its tracks. The attribute descriptions focus on <strong>noticeable characteristics</strong> of the object, while <strong>"other_attributes"</strong> provide more detailed information, although these might not be visible throughout the entire video.</p>
+        <p>To align with the standard format of MOT challenges, each video is accompanied by <em>tracking ground truth data</em> in a separate text file. This ensures <strong>consistency with the conventions of MOT problems</strong>. The annotation is done in <strong>JSON format</strong>, and an example of this structure is provided in the study. Four annotators conducted this annotation, and the data is <strong>available to the public</strong>.</p>
+        <p>
+           Our dataset with textual description annotations are formatted in COCO format. Each generic object is labeled as follows:
+           <div class="image-container">
+                <pre class="pre-container" style="border-right: 1px solid #ffffff;">
+<b>Text label for referring with specific attributes</b>
+{
+    video: "",
+    label: [
+        {
+            object: "",
+            object_synonym: [""],
+            attribute: "",
+            other_attributes: [""],
+            tracks = {}
+        },
+    ]
+}
+                </pre>
+
+                <pre class="pre-container">
+<b>Track label for associating objects' IDs through time</b>
+1, 1, xl, yt, w, h, 1, 1, 1
+1, 2, xl, yt, w, h, 1, 1, 1
+1, 3, xl, yt, w, h, 1, 1, 1
+2, 1, xl, yt, w, h, 1, 1, 1
+2, 2, xl, yt, w, h, 1, 1, 1
+2, 3, xl, yt, w, h, 1, 1, 1
+3, 1, xl, yt, w, h, 1, 1, 1
+3, 2, xl, yt, w, h, 1, 1, 1
+3, 3, xl, yt, w, h, 1, 1, 1
+                    </pre>
+           </div>
+           
+           <ul>
+               <p style="font-weight: bold; font-style: italic;">For text label:</p> 
+               <li><b>“Video”</b>: video name. For example "airplane-0" </li>
+               <li><b>”object"</b>: particular generic objects type. For example, aircraft</li>
+               <li><b>“object_synonym”</b>: synonym of object. For example, sky vehicle, air transportation</li>
+               <li><b>“attribute”</b>: specific characteristic of the object. For example, helicopter</li>
+               <li><b>“other_attributes”</b>: object's extra attributes which not necessary visible but representative. For example, chopper, copter</li>
+               <p style="font-weight: bold; font-style: italic;">For track label:</p>
+               <p>each line will contain 9 elements, seperated by commas</p>
+               <p style="color: red;">&lt;frame_id&gt;, &lt;track_id&gt;, &lt;bb_left&gt;, &lt;bb_top&gt;, &lt;bb_width&gt;, &lt;bb_height&gt;, 1, 1, 1</p>
+               <li><b>"frame_id":</b> index of frame in video sequence</li>
+               <li><b>"track_id"</b>: id of object accord to tracker</li>
+               <li><b>"bb_left":</b> x coordinate for top left</li>
+               <li><b>"bb_top":</b> y coordinate for top left</li>
+               <li><b>"bb_width":</b> width of the box that contains object</li>
+               <li><b>"bb_height":</b> height of the box that contains object</li>
+            </ul>
+
+           <div class="image-json-container">
+            <img src="media/dataset_gmot40.jpg" alt="Image 1" class="image-dataset">
+            <pre class="json-dataset">
+              <b>“video”</b>: stock-3
+              <b>“label”</b>: [{
+                  &nbsp;&nbsp;&nbsp;&nbsp;<b>”object"</b>: "stock"
+                  &nbsp;&nbsp;&nbsp;&nbsp;<b>“object_synonym”</b>: [“wild dog”]
+                  &nbsp;&nbsp;&nbsp;&nbsp;<b>“attribute”</b>: ["gray fur"]
+                  &nbsp;&nbsp;&nbsp;&nbsp;<b>“other_attributes”</b>: [“four legs”, “sharp teeth”, 
+                  <div style="padding-left:13.00em;">"small ears", "strong jaw"]</div>&nbsp;&nbsp;&nbsp;&nbsp;<b>“tracks”</b>: "stock-3.txt"
+              }]
+            </pre>
+          </div>
+
+          <div class="image-json-container">
+            <img src="media/ball0.jpg" alt="Image 1" class="image-dataset">
+            <pre class="json-dataset">
+              <b>“video”</b>: ball-0
+              <b>“label”</b>: [{
+                  &nbsp;&nbsp;&nbsp;&nbsp;<b>”object"</b>: "stock"
+                  &nbsp;&nbsp;&nbsp;&nbsp;<b>“object_synonym”</b>: ["sphere, "billard ball",
+                  <div style="padding-left:13.00em;"> "billard sphere"]</div>&nbsp;&nbsp;&nbsp;&nbsp;<b>“attribute”</b>: ["circle", "round", red"]
+                  &nbsp;&nbsp;&nbsp;&nbsp;<b>“other_attributes”</b>: ["small", "smooth", "numbering",
+                  <div style="padding-left:13.00em;">"glossy"]</div>&nbsp;&nbsp;&nbsp;&nbsp;<b>“tracks”</b>: "ball-0.txt"
+              }]
+            </pre>
+          </div>
+
+          <div class="image-json-container">
+            <img src="media/car1.jpg" alt="Image 1" class="image-dataset">
+            <pre class="json-dataset">
+              <b>“video”</b>: car-1
+              <b>“label”</b>: [{
+                  &nbsp;&nbsp;&nbsp;&nbsp;<b>”object"</b>: "car"
+                  &nbsp;&nbsp;&nbsp;&nbsp;<b>“object_synonym”</b>: ["transport, "vehicle"]
+                  &nbsp;&nbsp;&nbsp;&nbsp;<b>“attribute”</b>: ["white light"]
+                  &nbsp;&nbsp;&nbsp;&nbsp;<b>“other_attributes”</b>: ["frontal side", "night covered"]
+                  &nbsp;&nbsp;&nbsp;&nbsp;<b>“tracks”</b>: "car-1.txt"
+              }]
+            </pre>
+          </div>
+        </p>
+    </div>
+
+    <footer>
+        <div class="footer-content">
+            <p style="text-align: center;">&copy; Website for NAACL24's submission</p>
+        </div>
+    </footer>
+</body>

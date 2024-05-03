@@ -1,0 +1,305 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="" xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+    <meta charset="utf-8" />
+    <meta content="width=device-width, initial-scale=1" name="viewport" />
+    <title>
+        Z-GMOT with MA-SORT: Zero-shot Generic Multiple Object Tracking (GMOT) with Motion Appearance SORT (MA-SORT)
+    </title>
+    <meta content="Z-GMOT" property="og:title" />
+    <meta content="A typical pipeline for multi-object tracking (MOT) is to use a detector for object localization, and following re-identification (re-ID) for object association. This pipeline is partially motivated by recent progress in both object detec- tion and re-ID, and partially motivated by biases in existing tracking datasets, where most objects tend to have distin- guishing appearance and re-ID models are sufficient for es- tablishing associations. In response to such bias, we would like to re-emphasize that methods for multi-object tracking should also work when object appearance is not sufficiently discriminative. To this end, we propose a large-scale dataset for multi-human tracking, where humans have similar appearance, diverse motion and extreme articulation. As the dataset contains mostly group dancing videos, we name it “DanceTrack”. We expect DanceTrack to provide a better platform to develop more MOT algorithms that rely less on visual discrimination and depend more on motion analysis. We benchmark several state-of-the-art trackers on our dataset and observe a significant performance drop on DanceTrack when compared against existing benchmarks." name="description" property="og:description" />
+    <meta content="https://github.com/DanceTrack" property="og:url" />
+    <meta name="keywords" content="Generic Multi-Object Tracking in Uniform Appearance and Diverse Motion">
+
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/fontawesome.all.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/jpswalsh/academicons@1/css/academicons.min.css">
+    <link href="https://fonts.googleapis.com/css?family=Google+Sans|Noto+Sans|Castoro" rel="stylesheet">
+    <script defer src="js/fontawesome.all.min.js"></script>
+</head>
+
+<body>
+    <div class="navbar">
+        <h3>Z-GMOT demo</h3>
+        <ul>
+            <li><a href="index.html">Home</a></li>
+            <li><a href="result.html">Result</a></li>
+            <li><a href="dataset.html">Dataset</a></li>
+        </ul>
+        <script>
+            // Get the current URL
+            var currentURL = window.location.href;
+        
+            // Select all navigation links
+            var navLinks = document.querySelectorAll('.navbar a');
+        
+            // Loop through the links to find the active one
+            for (var i = 0; i < navLinks.length; i++) {
+                var linkURL = navLinks[i].href;
+        
+                // Check if the current URL contains the link's URL
+                if (currentURL.indexOf(linkURL) !== -1) {
+                    // Add the "active" class to the link
+                    navLinks[i].classList.add('active');
+                }
+            }
+        </script>
+    </div>
+    
+
+    <div class="n-title">
+        <h1>
+            Z-GMOT with MA-SORT: Zero-shot Generic Multiple Object Tracking (GMOT) with Motion Appearance SORT (MA-SORT)
+        </h1>
+    </div>
+    <div class="n-byline">
+        <div class="byline">
+
+            <ul class="authors">
+                <li>
+                    Kim Hoang Tran<sup>1,2</sup>
+                </li>
+                <li>
+                    Anh Duy Le Dinh<sup>1</sup>
+                </li>
+                <li>
+                    Tien Phat Nguyen<sup>1</sup>
+                </li>
+                <li>
+                    Thinh Phan<sup>3</sup>
+                </li>
+                <li>
+                    Pha Nguyen<sup>3</sup>
+                </li>                
+                <li>
+                    Khoa Luu<sup>3</sup>
+                </li>
+                <li>
+                    Donald Adjeroh<sup>4</sup>
+                </li>
+                <li>
+                    Gianfranco Doretto<sup>4</sup>
+                </li>
+                <li>
+                    Ngan Hoang Le<sup>3</sup>
+                </li>                                  
+            </ul>
+            <ul class="authors affiliations">
+                <li>
+                    <sup>
+                        1
+                    </sup>
+                    FPT Software AI Center, Vietnam
+                </li>
+                <li>
+                    <sup>
+                        2
+                    </sup>
+                    VNUHCM-University of Science, Vietnam
+                </li>
+                <li>
+                    <sup>
+                        3
+                    </sup>
+                    Department of Computer Science, University of Arkansas, USA
+                </li>
+                <li>
+                    <sup>
+                        4
+                    </sup>
+                    Department of Computer Science, West Virginia University, USA
+                </li>                
+            </ul>            
+            <ul class="authors">
+                <li>
+                    This work has been accepted to NAACL findings 2024
+                </li>
+            </ul>
+
+            <ul class="authors links">
+                <li>
+                    <a href="https://arxiv.org/abs/2305.17648" target="_blank">
+                        <button class="btn"><svg class="svg-inline--fa fa-file-pdf fa-w-12" aria-hidden="true" focusable="false" data-prefix="fa" data-icon="file-pdf" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 384 512" data-fa-i2svg=""><path fill="currentColor" d="M181.9 256.1c-5-16-4.9-46.9-2-46.9 8.4 0 7.6 36.9 2 46.9zm-1.7 47.2c-7.7 20.2-17.3 43.3-28.4 62.7 18.3-7 39-17.2 62.9-21.9-12.7-9.6-24.9-23.4-34.5-40.8zM86.1 428.1c0 .8 13.2-5.4 34.9-40.2-6.7 6.3-29.1 24.5-34.9 40.2zM248 160h136v328c0 13.3-10.7 24-24 24H24c-13.3 0-24-10.7-24-24V24C0 10.7 10.7 0 24 0h200v136c0 13.2 10.8 24 24 24zm-8 171.8c-20-12.2-33.3-29-42.7-53.8 4.5-18.5 11.6-46.6 6.2-64.2-4.7-29.4-42.4-26.5-47.8-6.8-5 18.3-.4 44.1 8.1 77-11.6 27.6-28.7 64.6-40.8 85.8-.1 0-.1.1-.2.1-27.1 13.9-73.6 44.5-54.5 68 5.6 6.9 16 10 21.5 10 17.9 0 35.7-18 61.1-61.8 25.8-8.5 54.1-19.1 79-23.2 21.7 11.8 47.1 19.5 64 19.5 29.2 0 31.2-32 19.7-43.4-13.9-13.6-54.3-9.7-73.6-7.2zM377 105L279 7c-4.5-4.5-10.6-7-17-7h-6v128h128v-6.1c0-6.3-2.5-12.4-7-16.9zm-74.1 255.3c4.1-2.7-2.5-11.9-42.8-9 37.1 15.8 42.8 9 42.8 9z"></path></svg><!-- <i class="fa fa-file-pdf"></i> Font Awesome fontawesome.com --> Paper</button>
+                    </a>
+                </li>
+                <li>
+                    <a href="https://github.com/Fsoft-AIC/Z-GMOT_Code" target="_blank">
+                        <button class="btn"><svg class="svg-inline--fa fa-github fa-w-16" aria-hidden="true" focusable="false" data-prefix="fab" data-icon="github" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 496 512" data-fa-i2svg=""><path fill="currentColor" d="M165.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6zm-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3zm44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9zM244.8 8C106.1 8 0 113.3 0 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C428.2 457.8 496 362.9 496 252 496 113.3 383.5 8 244.8 8zM97.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1zm-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7zm32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1zm-11.4-14.7c-1.6 1-1.6 3.6 0 5.9 1.6 2.3 4.3 3.3 5.6 2.3 1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2z"></path></svg><!-- <i class="fab fa-github"></i> Font Awesome fontawesome.com --> Code</button>
+                    </a>
+                </li>
+                <li>
+                    <a href="dataset.html" target="_blank">
+                        <button class="btn"><svg class="svg-inline--fa fa-github fa-w-16" aria-hidden="true" focusable="false" data-prefix="fab" data-icon="github" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 496 512" data-fa-i2svg=""><path fill="currentColor" d="M165.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6zm-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3zm44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9zM244.8 8C106.1 8 0 113.3 0 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C428.2 457.8 496 362.9 496 252 496 113.3 383.5 8 244.8 8zM97.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1zm-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7zm32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1zm-11.4-14.7c-1.6 1-1.6 3.6 0 5.9 1.6 2.3 4.3 3.3 5.6 2.3 1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2z"></path></svg><!-- <i class="fab fa-github"></i> Font Awesome fontawesome.com --> Dataset</button>
+                    </a>
+                </li>
+                <li>
+                    <a href="result.html" target="_blank">
+                        <button class="btn"><svg class="svg-inline--fa fa-github fa-w-16" aria-hidden="true" focusable="false" data-prefix="fab" data-icon="github" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 496 512" data-fa-i2svg=""><path fill="currentColor" d="M165.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6zm-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3zm44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9zM244.8 8C106.1 8 0 113.3 0 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C428.2 457.8 496 362.9 496 252 496 113.3 383.5 8 244.8 8zM97.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1zm-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7zm32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1zm-11.4-14.7c-1.6 1-1.6 3.6 0 5.9 1.6 2.3 4.3 3.3 5.6 2.3 1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2z"></path></svg><!-- <i class="fab fa-github"></i> Font Awesome fontawesome.com --> Demo</button>
+                    </a>
+                </li>
+            </ul>
+        </div>
+    </div>
+
+<!-- <iframe width="760" height="381" src="https://www.youtube.com/embed/IvxeJRg4rYg" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe> -->
+    
+    <div class="n-article">
+        
+        <div>
+            <img class="figure" src="media/teaser.png" width="100%" alt="method comparison">
+            <p class="figure-name"><b>Figure 1</b>: Comparison between existing methods with our current framework Z-GMOT for zero shot object detection</p>
+        </div>
+
+        <div class="n-page video">
+
+            <p style="text-align: center; font-size: 22px; font-family: 'Courier New', monospace; font-weight: bold;">Track only
+                <span style="font-weight: bold; color: orange;">red </span>
+                <span style="font-weight: bold; color: green;">athletes</span>
+            </p>
+            <div class="videoWrapper shadow">
+                <iframe width="560" height="315" border-style=none src="https://www.youtube.com/embed/Chfr15dwNk4" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+            </div>
+
+            <p style="text-align: center; font-size: 22px; font-family: 'Courier New', monospace; font-weight: bold;">Track only
+                <span style="font-weight: bold; color: green;">cars </span>
+                with
+                <span style="font-weight: bold; color: orange;">white headlights</span>
+                on the left side road
+            </p>
+            <div class="videoWrapper shadow">
+                <iframe width="560" height="315" border-style=none src="https://www.youtube.com/embed/YguElS11BDs" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+            </div>
+
+        </div>        
+
+        <h2 id="abstract">
+            Demand for zero-shot tracking
+        </h2>
+        <p>
+            Multiple Object Tracking (MOT) plays a crucial role in diverse real-world scenarios, such as surveillance, security, autonomous driving, robotics, biology, etc.
+            Despite recent significant progress, Multi-Object Tracking (MOT) faces limitations such as reliance on prior knowledge and predefined categories, and struggles with unseen objects, and understanding the object attributes. 
+            To address this, Generic Multiple Object Tracking (GMOT) requires less prior information, but existing GMOT methods rely on initial bounding boxes and struggle with variations e.g., viewpoint, lighting, occlusion, scale, etc. We propose <b>Z-GMOT</b>, capable of tracking never-seen categories with no training examples, without predefined categories or initial bounding boxes. Our approach includes <b>iGLIP</b>, an improved Grounded language-image pretraining, for accurately detecting unseen objects with specific characteristics. Addressing challenges in tracking high-similarity objects within the same category, we introduce <b>MA-SORT</b>, which integrates motion and appearance-based matching. Extensive evaluation on GMOT-40 dataset, AnimalTrack test set, DanceTrack validation set demonstrates substantial improvements.
+        </p>
+
+        <!------------------------------------------------------Section Boundary-------------------------------------------------->
+        
+        <h2 id="limitation">
+            Limitations of existing tracking methods?
+        </h2>
+        <p style="font-size: 22px;">
+            <b>What are the problems with current MOT methods?</b>
+        </p>
+        <p>
+             
+            We realize that current MOT methods suffer from several limitations:
+        </p>
+        <p>
+            (1) They heavily depend on prior knowledge of tracking targets, which is only able to track vehicles and pedestrians, and require costly annotation efforts for large labeled datasets.
+                => There are a lot of essential demands to detect and track unseen objects.
+                => By applying a Vision-Language object detector (VL-OD) like GLIP into tracking, we propose <span style="font-weight: bold; color:rgb(255, 0, 0);">a novel tracking framework Z-GMOT</span>, to track arbitrary objects in zero-shot.            
+        </p>
+        <p>
+            (2) However, the existing VL-ODs like GLIP struggle to localize objects with specific characteristics like color, shape, etc.
+            => We need a mechanism to help the GLIP detect more accurately by focusing more on objects' attributes thus this results in our <span style="font-weight: bold; color:rgb(255, 0, 0)">proposed iGLIP.</span>
+        </p>
+        <p>
+            (3) they are limited in handling objects with indistinguishable appearances.
+            
+                => The association model in second stage needs to focus more on motion rather than appearance because the objects have high similar appearance.
+                => That is our motivation to propose <span style="font-weight: bold; color:rgb(255, 0, 0);">MA-SORT tracker</span>
+        </p>
+
+        <p style="font-size: 22px;">
+            <b>Vision Language object detector - GLIP:</b>
+        </p>
+        <p>
+            In recent years, the abundance of image-text pairs on the Internet has given rise to the emergence of Vision-Language (VL) models, which combine the ability to comprehend visual data with natural language processing capabilities. Apart from traditional one-hot vector labels, semantic meanings and captions can be utilized, making CV tasks more flexible and capable of handling open-world scenarios by identifying novel concepts in real-world applications and recognizing previously unseen categories.
+            <br>However, we empirically noticed several limitations of GLIP as follows
+        </p>
+        <p>
+            <b><u><span style="font-size: 20px;">Limitation 1 - High False Positives:</span></u></b> 
+            Current object recognition models, like GLIP, perform well for general categories (e.g., 'car') but struggle with 
+            specific details (e.g., 'red car'). At high thresholds, important objects are often missed, while at low thresholds, 
+            incorrect objects are identified. Balancing this trade-off is challenging, making it hard to achieve optimal performance 
+            for specific object categories.
+        </p>
+        <div>
+            <img class="figure" src="media/limit1.png" width="100%" alt="Limitation 1">
+        </div>
+
+        <p>
+            <b><u><span style="font-size: 20px;">Limitation 2 - Deep fusion in GLIP weakens proposal features when dealing with specific object category:</span></u></b> 
+            GLIP uses text embedding to process and represent information, but it faces challenges in recognizing specific object 
+            categories. The impact of text embedding varies, either enhancing (for general objects) or weakening (for specific objects) 
+            the features of proposed objects. This inconsistency affects the overall performance of GLIP, especially for categories 
+            that involve detailed property descriptions.
+        </p>
+        <div>
+            <img class="figure" src="media/limit2.png" width="100%" alt="Limitation 2">
+        </div>
+
+        <!------------------------------------------------------Section Boundary-------------------------------------------------->
+        
+        <h2 id="zgmot">
+            Z-GMOT
+        </h2>
+        <div>
+            <img class="figure" src="media/ZGMOT.jpg" width="100%" alt="Pipeline Overview">
+        </div>
+        <p>
+            Based on the advancements of recent works in multi-modal, we propose a method which we believe is the future of multi-object tracking - Z-GMOT, a cutting-edge paradigm that seamlessly integrates Natural Language Processing (NLP) to redefine the way we perceive and interact with visual data. Z-GMOT stands at the forefront of innovation, offering unparalleled precision in tracking objects by leveraging advanced linguistic input.
+        </p>
+        <p>
+            Above we have an example of a single image encapsulates a multitude of intricacies: a bustling scene with various cars, each unique in its color and characteristics. With Z-GMOT, the paradigm transcends traditional limitations, effortlessly tracking not only the generic "all cars" but also delving into the realm of specificity with distinctions such as "red car," "yellow car," and "blue car."
+        </p>
+        <p>
+            In our exclusive demonstration, you can see the proficiency of Z-GMOT as it navigates through a captivating image, dynamically tracking and distinguishing between cars based on their color. Picture the finesse with which this paradigm adapts to your natural language queries, discerning the subtle nuances that set each car apart from the rest.
+        </p>
+        
+
+        <h2 id="method">
+            Methodology
+        </h2>
+        <p>
+            In our approach, we've developed innovative techniques to improve the way we track objects in diverse scenarios. We introduce two key components: iGLIP and MA-SORT.
+        </p>
+        
+        <h3>iGLIP: Smarter Object Recognition</h3>
+        <p>
+            To overcome challenges in recognizing specific objects, we've enhanced GLIP. Using improved prompts and a clever matching mechanism, iGLIP accurately identifies objects, even those with detailed characteristics, without being misled by irrelevant information.
+        </p>
+        <img class="figure" src="media/glip-iglip.png" width="100%" alt="iGLIP Overview">
+        <p>
+            Up until now, the challenge of precisely detecting objects with rich details has remained a formidable task, especially 
+            when using Vision-Language Large Models (V-LLMs). These models, while powerful, often demand 
+            <span style="font-weight: bold; font-style: italic;">significant time and resources</span>. 
+            Unfortunately, their smaller counterparts tend to fare even worse in performance. Our approach introduces a transformative 
+            solution to this issue. Think of it as a <span style="font-weight: bold; color:orangered;">sophisticated filter</span> that effectively weeds out incorrect detections — what we call 
+            'False Positives.' This enhances the overall accuracy of the system. The key here is that even within a single category, 
+            objects can have diverse characteristics, which sometimes confuses the Vision-Language (VL) model. Our method smartly 
+            navigates these complexities, ensuring a more reliable and precise object detection
+        </p>
+        
+        <h3>MA-SORT: More Accurate Tracking</h3>
+        <p>
+            Our innovative second component, MA-SORT, elevates the precision of object tracking to new heights. 
+            This advanced method merges motion and appearance cues, empowering our system to track objects with remarkable accuracy. 
+            This is particularly effective in challenging situations where relying solely on appearance could lead to confusion — 
+            imagine trying to differentiate between multiple, similar-looking objects. MA-SORT cleverly blends these two crucial 
+            elements, adjusting their importance based on real-time evidence and calculations. This dynamic adaptation allows for more 
+            dependable and accurate tracking across a variety of scenarios, ensuring that objects are followed with unparalleled 
+            precision.
+        </p>
+    </div>
+
+    <footer>
+        <div class="footer-content">
+            <p style="text-align: center;">&copy; Website for NAACL24's submission</p>
+        </div>
+    </footer>
+</body>
+
+</html>
+    
+                   
