@@ -16,7 +16,7 @@ Our dataset is available [here](https://drive.google.com/drive/folders/1OTEiQr93
 
 > **Note:** This link contains only processed bounding boxes and captions. The videos should be downloaded from the original datasets (GMOT40, AnimalTrack, DanceTrack, MOT) referenced in the paper.
 
-Our code for object grounding is built upon [GLIP](https://github.com/microsoft/GLIP). Since we do not fine-tune or retrain the models, the model weights/checkpoints should be downloaded from the original GLIP repository.
+Our code for the proposed object grounding **iGLIP** is built upon [GLIP](https://github.com/microsoft/GLIP). Since we do not fine-tune or retrain the models, the model weights/checkpoints should be downloaded from the original GLIP repository.
 
 Our proposed MA-SORT is built upon [Deep-OC-SORT](https://github.com/gerardmaggiolino/deep-oc-sort), with the Re-ID model obtained from [cosine_metric_learning](https://github.com/nwojke/cosine_metric_learning).
 
